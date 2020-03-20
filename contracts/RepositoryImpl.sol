@@ -1,10 +1,15 @@
 pragma solidity >=0.6.1;
 
 import "./IRepository.sol";
+import "./IProxyImpl.sol";
 import "./Ownable.sol";
 
-contract RepositoryImpl is Ownable, IRepository {
+contract RepositoryImpl is Ownable, IRepository, IProxyImpl {
   constructor () public Ownable() {}
+
+  function getImplementationVersion () public pure override returns (string memory) {
+    return "1";
+  }
 
   function getNumberOfDapps () public view override returns (uint) {
     return dataUint["numDapps"];
@@ -26,8 +31,8 @@ contract RepositoryImpl is Ownable, IRepository {
     date_ = dataUint[_ss(_dappId, "date")];
   }
 
-  function getIdOfContractForDapp (string memory _dappId, uint _contractIndex) public view override returns (string memory) {
-    return dataString[_ssi(_dappId, "contract", _contractIndex)];
+  function getIdOfContractForDapp (string memory _dappId, uint _contractIndex) public view override returns (bytes32) {
+    return dataBytes32[_ssi(_dappId, "contract", _contractIndex)];
   }
 
   function getNumberOfDappsByPublisher (address _publisher) public view override returns (uint) {
@@ -57,6 +62,7 @@ contract RepositoryImpl is Ownable, IRepository {
 
   function publish (string memory _dappId, bytes32[] memory _bytecodeHashes) public override {
     require(dataAddress[_ss(_dappId, "publisher")] == address(0), 'already published');
+    require(_bytecodeHashes.length > 0, 'need atleast 1 bytecode hash');
 
     // save dapp data
     dataAddress[_ss(_dappId, "publisher")] = msg.sender;
@@ -66,10 +72,14 @@ contract RepositoryImpl is Ownable, IRepository {
       bytes32 h = _bytecodeHashes[i];
 
       dataBytes32[_ssi(_dappId, "contract", i + 1)] = h;
+      require(!dataBool[_bs(h, _dappId)], 'duplicate bytecode hash detected');
+      dataBool[_bs(h, _dappId)] = true;
 
       // save contract data
       dataUint[_bs(h, "numDapps")] += 1;
       dataString[_bsi(h, "dapp", dataUint[_bs(h, "numDapps")])] = _dappId;
+
+      // if there are duplicate bytecodes hashes in the list then thi=s will fail
       dataString[_bsa(h, "publisherLatestDapp", msg.sender)] = _dappId;
     }
 

@@ -12,7 +12,7 @@ interface IRepository {
     uint date_
   );
 
-  function getIdOfContractForDapp (string calldata _dappId, uint _contractIndex) external view returns (string memory);
+  function getIdOfContractForDapp (string calldata _dappId, uint _contractIndex) external view returns (bytes32);
 
   function getNumberOfDappsByPublisher (address _publisher) external view returns (uint);
 
