@@ -67,7 +67,7 @@ contract('Repository', accounts => {
     })
   })
 
-  describe.only('publishing', () => {
+  describe('publishing', () => {
     const toHash = a => (Array.isArray(a) ? a.map(v => keccak256(v)) : keccak256(a))
 
     it('anyone can publish', async () => {
