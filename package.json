@@ -20,7 +20,8 @@
     "compile": "yarn truffle compile --network test && ./scripts/generateIndex.js",
     "extract-deployed-addresses": "./scripts/extractDeployedAddresses.js",
     "deploy:local": "yarn compile && yarn truffle migrate --network test",
-    "deploy:rinkeby": "yarn compile && yarn truffle migrate --network rinkeby && yarn extract-deployed-addresses"
+    "deploy:rinkeby": "yarn compile && yarn truffle migrate --network rinkeby && yarn extract-deployed-addresses",
+    "publish-to-npm": "yarn publish --access public"
   },
   "repository": {
     "type": "git",

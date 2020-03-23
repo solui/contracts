@@ -28,6 +28,12 @@ Run tests with coverage:
 yarn coverage
 ```
 
+Deploy new version:
+
+```shell
+yarn publish-to-npm
+```
+
 ## LICENSE
 
 AGPLv3
