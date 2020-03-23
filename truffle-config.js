@@ -25,6 +25,11 @@ provider.send = provider.sendAsync.bind(provider)
 
 module.exports = {
   networks: {
+    mainnet: {
+      provider: (num_addresses = 1) => new HDWalletProvider(mnemonic, `https://mainnet.infura.io/v3/${infuraKey}`, 0, num_addresses),
+      gasPrice: 4000000000, // 4 gwei,
+      network_id: 1,
+    },
     rinkeby: {
       provider: (num_addresses = 1) => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/${infuraKey}`, 0, num_addresses),
       gasPrice: 50000000000, // 50 gwei,

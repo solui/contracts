@@ -2,7 +2,7 @@
 
 [solUI](https://solui.dev) on-chain contracts.
 
-## For devs
+## Dev guide
 
 Run a devnet:
 

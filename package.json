@@ -1,31 +1,40 @@
 {
-  "name": "ethgoal-contracts",
+  "name": "@solui/contracts",
   "version": "1.0.0",
-  "private": true,
-  "description": "ethgoal contracts",
+  "description": "solUI smart contracts",
   "main": "index.js",
-  "directories": {
-    "test": "test"
-  },
+  "files": [
+    "contracts/**",
+    "build/**",
+    "migrations/**",
+    "utils/**",
+    "contracts.generated.js",
+    "deployedAddresses.json",
+    "index.js"
+  ],
   "scripts": {
     "devnet": "ganache-cli -a 10 -m 'funny door sample enrich female wedding stereo crane setup shop dwarf dismiss'",
     "truffle": "babel-node node_modules/.bin/truffle",
     "test": "yarn truffle test --network test",
     "coverage": "rm -rf coverage && yarn truffle run coverage && istanbul report lcov",
     "compile": "yarn truffle compile --network test && ./scripts/generateIndex.js",
-    "deploy:local": "yarn compile && yarn truffle migrate --network test"
+    "extract-deployed-addresses": "./scripts/extractDeployedAddresses.js",
+    "deploy:local": "yarn compile && yarn truffle migrate --network test",
+    "deploy:rinkeby": "yarn compile && yarn truffle migrate --network rinkeby && yarn extract-deployed-addresses"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hiddentao/ethgoal.io.git"
+    "url": "git+https://github.com/solui/contracts.git"
   },
   "author": "Ramesh Nair <ram@hiddentao.com>",
   "license": "AGPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/hiddentao/ethgoal.io/issues"
+    "url": "https://github.com/solui/contracts/issues"
   },
-  "homepage": "https://github.com/hiddentao/ethgoal.io#readme",
+  "homepage": "https://github.com/solui/contracts#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "coveralls": "^3.0.9",
@@ -42,9 +51,5 @@
     "truffle-hdwallet-provider": "^1.0.17",
     "web3": "^1.2.5",
     "web3-provider-engine": "^15.0.4"
-  },
-  "dependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
   }
 }
