@@ -2,6 +2,9 @@
 
 /* This script extracts deployed addresses from build folder and puts them into deployedAddresses.json */
 
+console.error('extractDeployedAddresses: Skipping this action as it will overwrite deployed addresses - be sure you want to do this!')
+process.exit(0)
+
 const fs = require('fs')
 const path = require('path')
 
@@ -14,6 +17,7 @@ const raw = [
 ].reduce((m, name) => {
   const jsonPath = path.join(projectDir, 'build', 'contracts', `${name}.json`)
   const { networks } = require(jsonPath)
+
   Object.keys(networks).forEach(key => {
     switch (key) {
       case '1': // mainnet
