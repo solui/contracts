@@ -95,11 +95,16 @@ contract('Repository', accounts => {
       it('including dapp data', async () => {
         await repository.getNumberOfDapps().should.eventually.eq(1)
         await repository.getIdOfDapp(1).should.eventually.eq('dapp1')
+
         await repository.getDapp('dapp1').should.eventually.matchObj({
           hostType_: 0,
           numContracts_: 2,
           publisher_: accounts[0],
         })
+
+        const ret = await repository.getDapp('dapp1')
+        expect(ret.date_.toNumber() > 0).to.be.true
+
         await repository.getIdOfContractForDapp('dapp1', 1).should.eventually.eq(toHash('bh1'))
         await repository.getIdOfContractForDapp('dapp1', 2).should.eventually.eq(toHash('bh2'))
       })

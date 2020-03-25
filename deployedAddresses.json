@@ -1,22 +1,2 @@
 {
-  "Repository": {
-    "1": {
-      "address": "0x254C48d376318E1B38e49c3D5493EE9F8098b0B5",
-      "transactionHash": "0x5ffbdd233274857ad4bc4d0d5677c352617d37eb7aca225921eacaea8d082cab"
-    },
-    "4": {
-      "address": "0x265A54097D354224c5c7F73071e0FAf276C8A581",
-      "transactionHash": "0x27dbfcb324322cbbf2bb761a794cf72d267f4ccdcb9914d139124e03fad8633a"
-    }
-  },
-  "RepositoryImpl": {
-    "1": {
-      "address": "0x2695eAF348476C9c44cc57F9AF854670555f37eB",
-      "transactionHash": "0x7181df9ab8b9264ba948c0b450ad2ebfc1e9b64c24501d14c075d5297ee6d9e1"
-    },
-    "4": {
-      "address": "0xd5BC9070c2235983fa928DB55fc89c2bE9273Ff3",
-      "transactionHash": "0xce9191740c4e4801a24a9b8f27920773c471bfee2ae3ad6f2ab378c3ceafbc82"
-    }
-  }
 }

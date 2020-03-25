@@ -66,8 +66,9 @@ contract RepositoryImpl is Ownable, IRepository, IProxyImpl {
 
     // save dapp data
     dataAddress[_ss(_dappId, "publisher")] = msg.sender;
-
     dataUint[_ss(_dappId, "numContracts")] = _bytecodeHashes.length;
+    dataUint[_ss(_dappId, "date")] = now;
+
     for (uint i = 0; i < _bytecodeHashes.length; i += 1) {
       bytes32 h = _bytecodeHashes[i];
 
@@ -82,8 +83,6 @@ contract RepositoryImpl is Ownable, IRepository, IProxyImpl {
       // if there are duplicate bytecodes hashes in the list then thi=s will fail
       dataString[_bsa(h, "publisherLatestDapp", msg.sender)] = _dappId;
     }
-
-    dataUint[_ss(_dappId, "data")] = now;
 
     // save publisher data
     dataUint[_as(msg.sender, "numDapps")] += 1;
