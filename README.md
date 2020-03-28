@@ -2,6 +2,11 @@
 
 [solUI](https://solui.dev) on-chain contracts.
 
+Deployed on mainnet:
+
+* Address: [0xa9FdEAEC32304ee5280445E20b475546c0831bCB](https://etherscan.io/address/0xa9FdEAEC32304ee5280445E20b475546c0831bCB)
+* UI: _TODO_
+
 ## Dev guide
 
 Run a devnet:

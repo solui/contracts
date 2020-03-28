@@ -1,0 +1,523 @@
+{
+  "version": 1,
+  "title": "solUI repository",
+  "description": "The solUI repository on the Ethereum Mainnet.",
+  "aboutUrl": "https://github.com/solui/contracts",
+  "constants": {
+    "repoAddress": {
+      "default": "",
+      "1": "0xa9FdEAEC32304ee5280445E20b475546c0831bCB"
+    }
+  },
+  "panels": [
+    {
+      "id": "get-num-dapps",
+      "title": "Get no. of dapps",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getNumberOfDapps",
+          "address": "@input[contractAddress]",
+          "saveResultAsInput": "numDapps"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "No. of dapps",
+          "type": "int",
+          "value": "@input[numDapps]"
+        }
+      ]
+    },
+    {
+      "id": "get-dapp-id",
+      "title": "Get id of dapp",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "number",
+          "title": "Dapp number",
+          "type": "int",
+          "validation": [
+            {
+              "type": "range",
+              "min": "1"
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfDapp",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_dappNumber": "@input[number]"
+          },
+          "saveResultAsInput": "dappId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Dapp id",
+          "type": "string",
+          "value": "@input[dappId]"
+        }
+      ]
+    },
+    {
+      "id": "get-dapp-info",
+      "title": "Get dapp info",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "id",
+          "title": "Dapp id",
+          "type": "string",
+          "validation": [
+            {
+              "type": "length",
+              "min": "1"
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getDapp",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_dappId": "@input[id]"
+          },
+          "saveResultAsInput": "info"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "No. of smart contracts",
+          "type": "int",
+          "value": "@input[info][numContracts_]"
+        },
+        {
+          "title": "Publisher",
+          "type": "address",
+          "value": "@input[info][publisher_]"
+        },
+        {
+          "title": "Date",
+          "type": "string",
+          "value": "@input[info][date_]",
+          "transform": [
+            {
+              "type": "intToDateString",
+              "format": "MMM dd, yyyy - HH:mm"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "get-dapp-contract-id",
+      "title": "Get bytecode hash of dapp contract",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "dappId",
+          "title": "Dapp id",
+          "type": "string",
+          "validation": [
+            {
+              "type": "length",
+              "min": "1"
+            }
+          ]
+        },
+        {
+          "name": "contractNum",
+          "title": "Contract number",
+          "type": "int",
+          "validation": [
+            {
+              "type": "range",
+              "min": "1"
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfContractForDapp",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_dappId": "@input[dappId]",
+            "_contractIndex": "@input[contractNum]"
+          },
+          "saveResultAsInput": "contractId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Contract bytecode hash",
+          "type": "string",
+          "value": "@input[contractId]"
+        }
+      ]
+    },
+    {
+      "id": "get-num-dapps-by-contract",
+      "title": "Get no. of dapps for contract",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "hash",
+          "title": "Contract bytecode hash",
+          "type": "bytes32"
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getNumberOfDappsForContract",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_bytecodeHash": "@input[hash]"
+          },
+          "saveResultAsInput": "numDapps"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "No. of dapps for contract",
+          "type": "int",
+          "value": "@input[numDapps]"
+        }
+      ]
+    },
+    {
+      "id": "get-contract-dapp-id",
+      "title": "Get id of dapp for contract",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "hash",
+          "title": "Contract bytecode hash",
+          "type": "bytes32"
+        },
+        {
+          "name": "number",
+          "title": "Dapp number",
+          "type": "int",
+          "validation": [
+            {
+              "type": "range",
+              "min": "1"
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfDappForContract",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_bytecodeHash": "@input[hash]",
+            "_contractDappNumber": "@input[number]"
+          },
+          "saveResultAsInput": "dappId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Dapp id",
+          "type": "string",
+          "value": "@input[dappId]"
+        }
+      ]
+    },
+    {
+      "id": "get-contract-latest-dapp-id",
+      "title": "Get id of most recent dapp for contract",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "hash",
+          "title": "Contract bytecode hash",
+          "type": "bytes32"
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfLatestDappForContract",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_bytecodeHash": "@input[hash]"
+          },
+          "saveResultAsInput": "dappId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Dapp id",
+          "type": "string",
+          "value": "@input[dappId]"
+        }
+      ]
+    },
+    {
+      "id": "get-contract-latest-dapp-by-publisher-id",
+      "title": "Get id of most recent dapp for contract by publisher",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "hash",
+          "title": "Contract bytecode hash",
+          "type": "bytes32"
+        },
+        {
+          "name": "publisher",
+          "title": "Publisher",
+          "type": "address",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "eoa": true,
+              "contract": true
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfLatestDappForContractByPublisher",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_bytecodeHash": "@input[hash]",
+            "_publisher": "@input[publisher]"
+          },
+          "saveResultAsInput": "dappId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Dapp id",
+          "type": "string",
+          "value": "@input[dappId]"
+        }
+      ]
+    },
+    {
+      "id": "get-num-dapps-by-publisher",
+      "title": "Get no. of dapps by publisher",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "publisher",
+          "title": "Publisher",
+          "type": "address",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "eoa": true,
+              "contract": true
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getNumberOfDappsByPublisher",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_publisher": "@input[publisher]"
+          },
+          "saveResultAsInput": "numDapps"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "No. of dapps by publisher",
+          "type": "int",
+          "value": "@input[numDapps]"
+        }
+      ]
+    },
+    {
+      "id": "get-publisher-dapp-id",
+      "title": "Get id of dapp by publisher",
+      "inputs": [
+        {
+          "name": "contractAddress",
+          "title": "Repository",
+          "type": "address",
+          "initialValue": "@constant[repoAddress]",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "publisher",
+          "title": "Publisher",
+          "type": "address",
+          "validation": [
+            {
+              "type": "allowedTypes",
+              "eoa": true,
+              "contract": true
+            }
+          ]
+        },
+        {
+          "name": "number",
+          "title": "Dapp number",
+          "type": "int",
+          "validation": [
+            {
+              "type": "range",
+              "min": "1"
+            }
+          ]
+        }
+      ],
+      "execs": [
+        {
+          "type": "call",
+          "contract": "IRepository",
+          "method": "getIdOfDappByPublisher",
+          "address": "@input[contractAddress]",
+          "args": {
+            "_publisher": "@input[publisher]",
+            "_publisherDappNumber": "@input[number]"
+          },
+          "saveResultAsInput": "dappId"
+        }
+      ],
+      "outputs": [
+        {
+          "title": "Dapp id",
+          "type": "string",
+          "value": "@input[dappId]"
+        }
+      ]
+    }
+  ]
+}
