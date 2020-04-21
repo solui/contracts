@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "production": true,
   "title": "solUI repository",
   "description": "The solUI repository on the Ethereum Mainnet.",
   "aboutUrl": "https://github.com/solui/contracts",
